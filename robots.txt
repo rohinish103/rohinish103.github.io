@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /login/
+Disallow: /attendance
+
+Sitemap: https://excellence-academy.me/sitemap.xml
