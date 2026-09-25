@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useClockSeconds } from "@/lib/client-store";
 
 const UNITS = [
   { key: "days", label: "Days" },
@@ -9,24 +9,41 @@ const UNITS = [
   { key: "secs", label: "Secs" },
 ] as const;
 
-function remaining(target: string) {
-  const diff = new Date(`${target}T00:00:00+05:30`).getTime() - Date.now();
-  const clamped = Math.max(diff, 0);
-  return {
-    days: Math.floor(clamped / 86_400_000),
-    hours: Math.floor((clamped / 3_600_000) % 24),
-    mins: Math.floor((clamped / 60_000) % 60),
-    secs: Math.floor((clamped / 1000) % 60),
-  };
+function nextStart(targets: string[], nowMs: number) {
+  const upcoming = targets
+    .map((date) => new Date(`${date}T00:00:00+05:30`).getTime())
+    .filter((time) => time > nowMs)
+    .sort((a, b) => a - b);
+  return upcoming[0] ?? null;
 }
 
-export function Countdown({ target }: { target: string }) {
-  const [time, setTime] = useState(() => remaining(target));
+export function Countdown({ targets }: { targets: string[] }) {
+  const seconds = useClockSeconds();
 
-  useEffect(() => {
-    const id = setInterval(() => setTime(remaining(target)), 1000);
-    return () => clearInterval(id);
-  }, [target]);
+  // Zero only before hydration, when the client clock has not reported yet.
+  if (seconds === 0) {
+    return <div className="h-[68px]" aria-hidden />;
+  }
+
+  const nowMs = seconds * 1000;
+  const target = nextStart(targets, nowMs);
+
+  if (target === null) {
+    return (
+      <p className="text-center text-sm text-muted-foreground">
+        Dates for the next intake are announced on WhatsApp — call us to reserve a
+        seat.
+      </p>
+    );
+  }
+
+  const diff = target - nowMs;
+  const time = {
+    days: Math.floor(diff / 86_400_000),
+    hours: Math.floor((diff / 3_600_000) % 24),
+    mins: Math.floor((diff / 60_000) % 60),
+    secs: Math.floor((diff / 1000) % 60),
+  };
 
   return (
     <div className="flex justify-center gap-2 sm:gap-3">

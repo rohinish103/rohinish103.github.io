@@ -168,7 +168,13 @@ export function EventCard({ event }: { event: SiteEvent }) {
   );
 }
 
-export function BatchCard({ batch }: { batch: Batch }) {
+export function BatchCard({
+  batch,
+  detailed = false,
+}: {
+  batch: Batch;
+  detailed?: boolean;
+}) {
   return (
     <article className="card card-hover flex flex-col p-5">
       <div className="flex items-start justify-between gap-3">
@@ -186,20 +192,22 @@ export function BatchCard({ batch }: { batch: Batch }) {
           {batch.faculty}
         </li>
       </ul>
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 space-y-2">
         <a
           href={whatsappUrl(
             `Hello ${site.name}, I want to enroll in the ${batch.name} batch.`,
           )}
           target="_blank"
           rel="noreferrer"
-          className="btn btn-primary flex-1 rounded-lg"
+          className="btn btn-primary w-full rounded-lg"
         >
-          Enroll
+          {detailed ? "Enroll via WhatsApp" : "Enroll"}
         </a>
-        <Link href="/admission" className="btn btn-outline rounded-lg">
-          Form
-        </Link>
+        {detailed ? (
+          <Link href="/admission" className="btn btn-outline w-full rounded-lg">
+            Admission Form
+          </Link>
+        ) : null}
       </div>
     </article>
   );

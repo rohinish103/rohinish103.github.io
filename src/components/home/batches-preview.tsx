@@ -12,7 +12,7 @@ export function BatchesPreview() {
         description="Secure your seat early — popular batches fill quickly."
       />
       <div className="mt-8">
-        <Countdown target={batches[0].startDate} />
+        <Countdown targets={batches.map((batch) => batch.startDate)} />
       </div>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {batches.map((batch) => (

@@ -5,10 +5,10 @@ import { heroStats, site } from "@/data/site";
 import { CountUp } from "@/components/count-up";
 
 const floatingPositions = [
-  "left-0 top-10 sm:-left-8",
-  "right-2 top-28 sm:-right-6",
-  "left-0 top-48 sm:-left-10",
-  "right-2 bottom-16 sm:-right-8",
+  "top-8 left-0 sm:-left-6",
+  "top-4 right-0 sm:-right-5",
+  "top-1/2 left-0 sm:-left-8",
+  "bottom-24 right-0 sm:-right-6",
 ];
 
 export function Hero() {
@@ -65,7 +65,7 @@ export function Hero() {
               width={900}
               height={1100}
               sizes="(min-width: 1024px) 40vw, 90vw"
-              className="h-[320px] w-full object-cover sm:h-[420px]"
+              className="h-[340px] w-full object-cover sm:h-[480px]"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#04203f]/95 to-transparent p-4">
               <p className="flex items-center gap-2 text-sm font-semibold text-white">
@@ -81,7 +81,7 @@ export function Hero() {
           {heroStats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`absolute ${floatingPositions[index]} hidden rounded-xl border border-white/25 bg-white/15 px-3 py-2 text-white shadow-lg backdrop-blur-md sm:block`}
+              className={`absolute ${floatingPositions[index]} hidden rounded-xl border border-white/20 bg-[#04203f]/70 px-3 py-2 text-white shadow-lg backdrop-blur-md sm:block`}
             >
               <p className="font-display text-lg font-semibold">
                 <CountUp value={stat.value} suffix={stat.suffix} />

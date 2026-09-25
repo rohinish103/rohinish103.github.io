@@ -22,17 +22,17 @@ export function CountUp({
     const node = ref.current;
     if (!node) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      setDisplay(value);
-      return;
-    }
-
     let frame = 0;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
         observer.disconnect();
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          setDisplay(value);
+          return;
+        }
+
         const start = performance.now();
         const tick = (now: number) => {
           const progress = Math.min((now - start) / duration, 1);

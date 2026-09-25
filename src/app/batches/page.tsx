@@ -26,11 +26,11 @@ export default function BatchesPage() {
           description="Each batch includes weekly tests, doubt sessions, and parent progress reports."
         />
         <div className="mt-8">
-          <Countdown target={batches[0].startDate} />
+          <Countdown targets={batches.map((batch) => batch.startDate)} />
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {batches.map((batch) => (
-            <BatchCard key={batch.name} batch={batch} />
+            <BatchCard key={batch.name} batch={batch} detailed />
           ))}
         </div>
       </section>

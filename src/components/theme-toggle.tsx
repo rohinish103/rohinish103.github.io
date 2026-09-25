@@ -1,18 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/lib/client-store";
 
 export function ThemeToggle({ className }: { className?: string }) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-  }, []);
+  const theme = useTheme();
 
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
     document.documentElement.classList.toggle("dark", next === "dark");
     try {
       localStorage.setItem("ea-theme", next);
