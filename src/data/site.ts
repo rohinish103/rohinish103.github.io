@@ -47,7 +47,7 @@ export const siteConfig = {
     percentage: 97.8,
     achievement: "Board Topper · Beawar District",
   },
-  url: "https://excellenceacademybeawar.com",
+  url: "https://www.excellence-academy.me",
 };
 
 export const mainNav: NavItem[] = [
